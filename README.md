@@ -8,10 +8,21 @@ https://registry.hub.docker.com/u/mcandre/docker-nsd/
 
 ```
 $ make
-docker exec 8f28708c483527ba9a39e44ffe576029aaa8ccc4a060941b4f0326b2aff351c0 nsd-checkconf /etc/nsd3/nsd.conf
-dig @$(boot2docker ip) www.google.com +short
-dig @$(boot2docker ip) www.sneaky.net +short
-3.141.59.26
+docker exec 583c66f769c41a81f803866a9250b0cf0e0c52612cddcbe8e549dc2f0830080a nsd-checkconf /etc/nsd3/nsd.conf
+dig @$(boot2docker ip) www.google.com +trace
+
+; <<>> DiG 9.8.3-P1 <<>> @192.168.59.103 www.google.com +trace
+; (1 server found)
+;; global options: +cmd
+;; Received 17 bytes from 192.168.59.103#53(192.168.59.103) in 0 ms
+
+dig @$(boot2docker ip) www.sneaky.net +noall +authority
+
+; <<>> DiG 9.8.3-P1 <<>> @192.168.59.103 www.sneaky.net +noall +authority
+; (1 server found)
+;; global options: +cmd
+sneaky.net.		259200	IN	NS	root.localhost.
+sneaky.net.		259200	IN	NS	localhost.
 dig @$(boot2docker ip) -x 3.141.59.26 +noall +authority
 
 ; <<>> DiG 9.8.3-P1 <<>> @192.168.59.103 -x 3.141.59.26 +noall +authority
