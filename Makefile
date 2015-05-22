@@ -1,4 +1,4 @@
-IMAGE=mcandre/docker-nsd:4
+IMAGE=mcandre/docker-nsd:latest
 
 all: run
 

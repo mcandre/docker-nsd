@@ -8,7 +8,7 @@ https://registry.hub.docker.com/u/mcandre/docker-nsd/
 
 ```
 $ make
-docker exec 583c66f769c41a81f803866a9250b0cf0e0c52612cddcbe8e549dc2f0830080a nsd-checkconf /etc/nsd3/nsd.conf
+docker exec 583c66f769c41a81f803866a9250b0cf0e0c52612cddcbe8e549dc2f0830080a nsd-checkconf /etc/nsd/nsd.conf
 dig @$(boot2docker ip) www.google.com +trace
 
 ; <<>> DiG 9.8.3-P1 <<>> @192.168.59.103 www.google.com +trace
