@@ -1,16 +1,12 @@
-FROM ubuntu:12.04
+FROM ubuntu
 MAINTAINER Andrew Pennebaker <andrew.pennebaker@gmail.com>
-
-RUN apt-get update
-RUN apt-get install -y nsd
-RUN mkdir -m 0775 -p /var/run/nsd3 && \
-		chown -R nsd:nsd /var/run/nsd3
-
-ADD nsd.conf /etc/nsd3/nsd.conf
-ADD sneaky.net.zone /etc/nsd3/sneaky.net.zone
-ADD 59.141.3.in-addr.arpa.zone /etc/nsd3/59.141.3.in-addr.arpa.zone
-RUN nsdc rebuild
-
+ADD nsd.conf /etc/nsd/nsd.conf
+ADD sneaky.net.zone /etc/nsd/sneaky.net.zone
+ADD 59.141.3.in-addr.arpa.zone /etc/nsd/59.141.3.in-addr.arpa.zone
+RUN apt-get update && \
+    apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y nsd openssl && \
+    nsd-control-setup && \
+    mkdir -p /run/nsd && \
+    touch /run/nsd/nsd.pid
 EXPOSE 53/udp 53/tcp
-
-ENTRYPOINT /usr/sbin/nsd -d -c /etc/nsd3/nsd.conf
+ENTRYPOINT /usr/sbin/nsd -d -c /etc/nsd/nsd.conf
