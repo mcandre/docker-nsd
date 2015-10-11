@@ -8,9 +8,9 @@ build: Dockerfile
 run: clean-containers build
 	$(eval CONTAINER=$(shell docker run -d -p 53:53/udp -p 53:53/tcp $(IMAGE)))
 	docker exec $(CONTAINER) nsd-checkconf /etc/nsd/nsd.conf
-	dig @$$(boot2docker ip) www.google.com +trace
-	dig @$$(boot2docker ip) www.sneaky.net +noall +authority
-	dig @$$(boot2docker ip) -x 3.141.59.26 +noall +authority
+	dig @$$(docker-machine ip default) www.google.com +trace
+	dig @$$(docker-machine ip default) www.sneaky.net +noall +authority
+	dig @$$(docker-machine ip default) -x 3.141.59.26 +noall +authority
 
 clean-containers:
 	-docker ps -a | grep -v IMAGE | awk '{ print $$1 }' | xargs docker rm -f
