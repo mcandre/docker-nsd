@@ -23,5 +23,10 @@ clean-layers:
 
 clean: clean-containers clean-images clean-layers
 
+dockerlint:
+	$(shell npm bin)/dockerlint
+
+lint: dockerlint
+
 publish:
 	docker push $(IMAGE)
